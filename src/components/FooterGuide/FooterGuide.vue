@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer">
+  <footer id="footer" >
     <a href="javascript:;" class="guide-item" :class="{active:$route.path === '/msite'}" @click="goTo('/msite')" >
       <span><i class="iconfont icon-waimai"></i></span>
       <span>外卖</span>

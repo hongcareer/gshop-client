@@ -60,10 +60,9 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
-
   .loginContainer
     width 100%
-    height 100%
+    height 667px
     background #fff
     .loginInner
       padding-top 60px

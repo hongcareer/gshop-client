@@ -112,7 +112,6 @@
       background-color white
       width 100%
       margin-top 10px
-      z-index 900
       .nearly
         box-sizing border-box
         padding 10px 0 0 10px

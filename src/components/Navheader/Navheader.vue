@@ -1,7 +1,7 @@
 <template>
   <header id="header">
     <slot name="left"></slot>
-    <span class="header-title">{{title}}</span>
+    <span class="header-title">{{title?title:'正在定位...'}}</span>
     <slot name="right"></slot>
   </header>
 </template>

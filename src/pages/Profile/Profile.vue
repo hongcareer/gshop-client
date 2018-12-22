@@ -111,6 +111,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+  @import '../../common/stylus/mixins.styl'
   .forth
     width 100%
     margin-top 45px

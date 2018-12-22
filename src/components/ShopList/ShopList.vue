@@ -1,18 +1,12 @@
 <template>
-  <ul class="shop-container">
+  <ul class="shop-container" v-if="shops.length>0">
     <li class="shop" v-for="(shop,index) in shops" :key="index">
       <div class="shop-img"><img :src="baseImgUrl+shop.image_path" alt=""/></div>
       <div class="shop-msg">
         <div class="top">
           <p class="intruction">{{shop.name}}</p>
           <div class="stars">
-            <div class="star">
-              <span class="on"></span>
-              <span class="on"></span>
-              <span class="on"></span>
-              <span class="on"></span>
-              <span class="on"></span>
-            </div>
+            <Star :rating="shop.rating"/>
             <span class="score">{{shop.rating}}</span>
             <span class="sell">月售{{shop.recent_order_num}}单</span>
           </div>
@@ -32,6 +26,21 @@
       </div>
     </li>
   </ul>
+  <ul v-else>
+    <li>
+      <img src="./images/shop_back.svg" />
+    </li>
+    <li>
+      <img src="./images/shop_back.svg" />
+    </li>
+    <li>
+      <img src="./images/shop_back.svg" />
+    </li>
+    <li>
+      <img src="./images/shop_back.svg" />
+    </li>
+  </ul>
+
 </template>
 
 <script>
@@ -87,26 +96,6 @@
               font-size 12px
           .stars
             margin:10px 0px 10px 0
-            .star
-              float left
-              .on
-                display inline-block
-                width 10px
-                height 10px
-                bg-image("./images/stars/star24_on")
-                background-size 10px 10px
-              .off
-                display inline-block
-                width 10px
-                height 10px
-                bg-image("./images/stars/star24_off")
-                background-size 10px 10px
-              .half
-                display inline-block
-                width 10px
-                height 10px
-                bg-image("./images/stars/star24_half")
-                background-size 10px 10px
             .score
               font-size: 10px
               color: #ff6000
