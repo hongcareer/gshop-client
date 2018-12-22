@@ -1,10 +1,10 @@
 <template>
   <ul class="shop-container">
-    <li class="shop">
-      <div class="shop-img"><img src="./images/shop/1.jpg" alt=""/></div>
+    <li class="shop" v-for="(shop,index) in shops" :key="index">
+      <div class="shop-img"><img :src="baseImgUrl+shop.image_path" alt=""/></div>
       <div class="shop-msg">
         <div class="top">
-          <p class="intruction">&nbsp;锄禾日当午，汗滴和下土</p>
+          <p class="intruction">{{shop.name}}</p>
           <div class="stars">
             <div class="star">
               <span class="on"></span>
@@ -13,23 +13,21 @@
               <span class="on"></span>
               <span class="on"></span>
             </div>
-            <span class="score">3.6</span>
-            <span class="sell">月售306单</span>
+            <span class="score">{{shop.rating}}</span>
+            <span class="sell">月售{{shop.recent_order_num}}单</span>
           </div>
           <p class="give">
-            <span>¥20起送</span>
+            <span>¥{{shop.float_minimum_order_amount}}起送</span>
             <span class="elis">/</span>
-            <span>免配送费</span>
+            <span>送费{{shop.float_delivery_fee}}元</span>
           </p>
         </div>
       </div>
       <div class="shop-others">
         <ul class="sure">
-          <li>保</li>
-          <li>准</li>
-          <li>票</li>
+          <li v-for="(support,index) in shop.supports" :key="index">{{support.icon_name}}</li>
         </ul>
-        <div  class="bird">蜂鸟专送</div>&nbsp;
+        <div  class="bird">{{shop.delivery_mode.text}}</div>&nbsp;
         <div class="on-time">准时达</div>
       </div>
     </li>
@@ -37,14 +35,23 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
-    name: "shoplist"
+    data () {
+      return {
+        baseImgUrl: 'https://fuss10.elemecdn.com'
+      }
+    },
+    computed:{
+      ...mapState(['shops'])
+    }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import '../../common/stylus/mixins.styl'
   .shop-container
+    box-sizing border-box
     width 100%
     padding 0px 10px 0 10px
     .shop
@@ -55,7 +62,6 @@
         margin-right 10px
         float left
         img
-          height 100%
           width 75px
       .shop-msg
         float left
@@ -117,7 +123,6 @@
         float right
         width 100px
         height 100%
-        margin-right: 20px
         .sure
           font-size: 10px
           color: #999

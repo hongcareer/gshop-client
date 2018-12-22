@@ -1,6 +1,6 @@
 <template>
   <div class="Msite">
-    <Navheader :title="'啦啦啦啦啦啦斤斤计较军军军斤斤计较'">
+    <Navheader :title="position.name">
       <span class="header-search" slot="left">
         <i class="iconfont icon-sousuo"></i>
       </span>
@@ -60,9 +60,16 @@
 </template>
 
 <script>
-  import ShopList from '../../components/ShopList/ShopList'
+  import ShopList from '../../components/ShopList/ShopList';
+  import {mapState} from 'vuex';
   export default {
     name: "Msite",
+    mounted(){
+      this.$store.dispatch('getShops')
+    },
+    computed:{
+      ...mapState(['position'])
+    },
     components:{
       ShopList
     }

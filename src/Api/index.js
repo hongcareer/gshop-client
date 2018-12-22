@@ -7,4 +7,4 @@ export const reqPosition=(longitude,latitude)=>ajax(BASE+`/position/${latitude},
 export const reqCategorys = () =>ajax(BASE+'/index_category')
 
 //根据经纬度获取商铺列表
-export const reqShops = (longitude,latitude)=>ajax(BASE+`/position/shops`,{longitude,latitude})
+export const reqShops = (longitude,latitude)=>ajax(BASE+`/shops`,{longitude,latitude})
