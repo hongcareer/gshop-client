@@ -3,6 +3,6 @@ export default {
   position:{},
   categorys:[],
   shops:[],
-  latitude: 40.10038,
-  longitude: 116.36867
+  latitude: 40.2211,
+  longitude: 114.41342
 }

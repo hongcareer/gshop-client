@@ -41,6 +41,6 @@ export default [
   },
   {
     path:'/',
-    component:Msite
+    redirect: '/msite'
   }
 ]

@@ -11,38 +11,10 @@
 
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <ul class="swiper-slide">
-          <li>
-            <img src="./images/nav/1.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/2.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/3.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/4.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/5.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/6.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/7.jpg" alt="">
-            <span>美食</span>
-          </li>
-          <li>
-            <img src="./images/nav/8.jpg" alt="">
-            <span>美食</span>
+        <ul class="swiper-slide" v-for="(category,index) in categoryArr" :key='index'>
+          <li v-for="(c,index) in category" :key="index">
+            <img :src="'https://fuss10.elemecdn.com' + c.image_url" alt="">
+            <span>{{c.title}}</span>
           </li>
         </ul>
       </div>
@@ -62,13 +34,60 @@
 <script>
   import ShopList from '../../components/ShopList/ShopList';
   import {mapState} from 'vuex';
+  import Swiper from 'swiper';
+  import 'swiper/dist/css/swiper.css'
+
+  // setTimeout(function(){
+  //
+  //   new Swiper ('.swiper-container', {
+  //     loop: true, // 循环模式选项
+  //     // 如果需要分页器
+  //     pagination: {
+  //       el: '.swiper-pagination',
+  //     },
+  //
+  //   })
+  // },1000)
+
   export default {
     name: "Msite",
     mounted(){
-      this.$store.dispatch('getShops')
+      this.$store.dispatch('getShops');
+      this.$store.dispatch('getCategorys')
     },
     computed:{
-      ...mapState(['position'])
+      ...mapState(['position','categorys']),
+      categoryArr(){
+        let bigArr = [];
+        let samllArr = [];
+        this.categorys.forEach((item,index)=>{
+          if(samllArr.length === 0){
+            bigArr.push(samllArr);
+          };
+          samllArr.push(item);
+
+          if(samllArr.length === 8){
+            samllArr = []
+          }
+        });
+        console.log(bigArr);
+        return bigArr;
+      }
+    },
+    watch:{
+      categorys(){
+        //数据中的状态发生变化的时候，先检查watch属性，再更新页面
+        //函数在数据发生更新之后再执行
+        this.$nextTick(function(){
+          new Swiper ('.swiper-container', {
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+            }
+          })
+        })
+      }
     },
     components:{
       ShopList
