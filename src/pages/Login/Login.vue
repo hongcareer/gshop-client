@@ -12,8 +12,11 @@
         <form>
           <div :class="{on:loginWay}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get_verification">获取验证码</button>
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phoneNumber">
+              <button :disabled='!getRightPhone || allSec > 0' class="get_verification"
+                      :class="{on:getRightPhone}" @click.prevent="getCode">
+                      {{allSec > 0?`已发送(${allSec})s`:'获取验证码'}}
+              </button>
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码">
@@ -29,10 +32,10 @@
                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="密码">
-                <div class="switch_button off">
-                  <div class="switch_circle"></div>
-                  <span class="switch_text">...</span>
+                <input :type="isShowPsw?'password':'text'" maxlength="8" placeholder="密码">
+                <div class="switch_button " @click="isShowPsw =!isShowPsw" :class="isShowPsw?'on':'off'">
+                  <div class="switch_circle"  :class="{right: isShowPsw}"></div>
+                  <span class="switch_text">{{isShowPsw?'abc':''}}</span>
                 </div>
               </section>
               <section class="login_message">
@@ -56,7 +59,27 @@
   export default {
     data(){
       return {
-        loginWay:true
+        loginWay:true,
+        phoneNumber:'',
+        allSec:0,
+        isShowPsw:true
+      }
+    },
+    computed:{
+      getRightPhone(){
+        return (/^1[34578]\d{9}$/.test(this.phoneNumber))
+      }
+    },
+    methods:{
+      getCode(){
+        this.allSec = 30;
+        let intervalId = setInterval(()=>{
+          this.allSec--
+          console.log(this.allSec)
+          if(this.allSec <= 0){
+            clearInterval(intervalId)
+          };
+        },1000);
       }
     }
   }
@@ -123,6 +146,8 @@
                 color #ccc
                 font-size 14px
                 background transparent
+                &.on
+                  color black
             .login_verification
               position relative
               margin-top 16px
@@ -162,6 +187,8 @@
                   background #fff
                   box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                   transition transform .3s
+                  &.right
+                    transform translateX(27px)
             .login_hint
               margin-top 12px
               color #999

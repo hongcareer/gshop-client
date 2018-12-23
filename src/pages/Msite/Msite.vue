@@ -9,7 +9,7 @@
       </span>
     </Navheader>
 
-    <div class="swiper-container">
+    <div class="swiper-container" v-if="categoryArr.length>0">
       <div class="swiper-wrapper">
         <ul class="swiper-slide" v-for="(category,index) in categoryArr" :key='index'>
           <li v-for="(c,index) in category" :key="index">
@@ -20,6 +20,7 @@
       </div>
       <div class="swiper-pagination"></div>
     </div>
+    <img src="./images/msite_back.svg" alt="" v-else>
     <!--main-->
     <div class="main">
       <div class="nearly">
