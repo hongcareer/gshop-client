@@ -4,5 +4,6 @@ export default {
   categorys:[],
   shops:[],
   latitude: 40.2211,
-  longitude: 114.41342
+  longitude: 114.41342,
+  user:{}
 }

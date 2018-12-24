@@ -12,14 +12,14 @@
         <form>
           <div :class="{on:loginWay}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号" v-model="phoneNumber">
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
               <button :disabled='!getRightPhone || allSec > 0' class="get_verification"
                       :class="{on:getRightPhone}" @click.prevent="getCode">
                       {{allSec > 0?`已发送(${allSec})s`:'获取验证码'}}
               </button>
             </section>
             <section class="login_verification">
-              <input type="tel" maxlength="8" placeholder="验证码">
+              <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
             </section>
             <section class="login_hint">
               温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
@@ -29,22 +29,22 @@
           <div :class="{on:!loginWay}">
             <section>
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                <input type="tel" maxlength="11" placeholder="用户名" v-model="name">
               </section>
               <section class="login_verification">
-                <input :type="isShowPsw?'password':'text'" maxlength="8" placeholder="密码">
+                <input :type="isShowPsw?'password':'text'" maxlength="8" placeholder="密码" v-model="pwd">
                 <div class="switch_button " @click="isShowPsw =!isShowPsw" :class="isShowPsw?'on':'off'">
                   <div class="switch_circle"  :class="{right: isShowPsw}"></div>
                   <span class="switch_text">{{isShowPsw?'abc':''}}</span>
                 </div>
               </section>
               <section class="login_message">
-                <input type="text" maxlength="11" placeholder="验证码">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
+                <img class="get_verification" ref='captcha' src="http://localhost:5000/captcha" alt="captcha" @click="getCaptcha">
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit" @click.prevent="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -56,18 +56,25 @@
 </template>
 
 <script>
+  import {sendCode,reqUserLogin,reqSmsLogin} from '../../Api/index';
+  import { MessageBox,Toast } from 'mint-ui';
+  let result;
   export default {
     data(){
       return {
-        loginWay:true,
-        phoneNumber:'',
+        loginWay:false,//true 短信登录 false 密码登录
         allSec:0,
-        isShowPsw:true
+        isShowPsw:true,
+        name:'',//用户名
+        phone:'',//电话号码
+        code:'',//验证码
+        pwd:'',//密码
+        captcha:'',//图形验证码
       }
     },
     computed:{
       getRightPhone(){
-        return (/^1[34578]\d{9}$/.test(this.phoneNumber))
+        return (/^1[34578]\d{9}$/.test(this.phone))
       }
     },
     methods:{
@@ -80,6 +87,40 @@
             clearInterval(intervalId)
           };
         },1000);
+        sendCode(this.phone)
+      },
+      async login(){
+        let {phone,code,name,pwd,captcha} = this;
+        if(this.loginWay){
+          result = await reqSmsLogin({phone,code})
+          if(!/^1[34578]\d{9}$/.test(this.phone)){
+            result.msg = '请输入正确的电话号码';
+            Toast(result.msg)
+          }else if(!code){
+            result.msg = '请输入正确的密码';
+            Toast(result.msg)
+          }
+        }else{
+          result = await reqUserLogin({name,pwd,captcha})
+          if(!name){
+            result.msg = '请输入用户名';
+            Toast(result.msg)
+          }else if(!pwd){
+            result.msg = '请输入密码';
+            Toast(result.msg)
+          }else if(!captcha){
+            result.msg = '请输入验证码';
+            Toast(result.msg)
+          }
+        };
+        //提示错误信息
+        //同步保存用户的登录名信息和电话信息到state中
+        this.$store.dispatch('saveUser',result);
+        //跳转的个人信息页面
+        this.$router.replace('/profile')
+      },
+      getCaptcha(){
+        this.$refs.captcha.src='http://localhost:5000/captcha?timer'+Date.now()
       }
     }
   }

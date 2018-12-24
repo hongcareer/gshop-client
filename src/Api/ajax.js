@@ -13,7 +13,7 @@ export default function ajax(url, data={}, method='GET') {
     // 执行异步ajax请求
     if(method==='GET') {
       promise = axios.get(url, {params: data}) // params配置指定的是query参数
-    } else {
+    } else if(method ==='POST') {
       promise = axios.post(url, data)
     }
     promise.then(response => {
@@ -25,26 +25,3 @@ export default function ajax(url, data={}, method='GET') {
     })
   })
 }
-
-/*
-const promise = ajax('/xxx')
-promise.then(response => {
-  const result = response.data
-
-}).catch()
-
-
-
-*/
-/*async function getAddress() {
-  /!*
-  const response = await ajax('/address')
-  const result = response.data
-  *!/
-  const result = await ajax('/address')
-  if(result.code===0) {
-
-  } else {
-
-  }
-}*/

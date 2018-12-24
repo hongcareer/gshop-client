@@ -5,12 +5,12 @@
       <div class="my-login" @click="goTo('/login')">
         <img src="./images/shop/2.jpg" alt="" class="headerImg">
         <div class="login">
-          <p class="p1">登录/注册</p>
-          <p class="p2">
+          <p class="p1" v-if="!user.phone">{{user.name?user.name:'登录/注册'}}</p>
+          <p class="p2" v-if="!user.name">
                 <span>
                   <i class="iconfont icon-shouji icon-mobile"></i>
                 </span>
-            <span>暂无绑定手机号</span>
+            <span>{{user.phone?user.phone:'暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="login-go">
@@ -96,16 +96,24 @@
               </span>
       </div>
     </div>
+    <mt-button type="danger" style="width:100%" @click="logout" v-if="user._id">退出登录</mt-button>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: "Profile",
     methods:{
       goTo(path){
         this.$router.push(path)
+      },
+      logout(){
+
       }
+    },
+    computed:{
+      ...mapState(['user'])
     }
   }
 </script>

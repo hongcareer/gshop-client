@@ -3,7 +3,8 @@
 import {
   RECEIVE_CATEGORYS,
   RECEIVE_POSITION,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USER
 }from './mutation-type';
 //异步函数
 import {
@@ -35,6 +36,13 @@ export default {
     if(result.code === 0){
       let shops = result.data;
       commit(RECEIVE_SHOPS,{shops})
+    }
+  },
+  //保存用户的信息
+  saveUser({commit},result){
+    if(result.code === 0){
+      let user = result.data
+      commit(RECEIVE_USER,{user})
     }
   }
 }

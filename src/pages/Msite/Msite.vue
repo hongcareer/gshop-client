@@ -71,7 +71,6 @@
             samllArr = []
           }
         });
-        console.log(bigArr);
         return bigArr;
       }
     },
