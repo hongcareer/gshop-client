@@ -38,16 +38,6 @@
   import Swiper from 'swiper';
   import 'swiper/dist/css/swiper.css'
 
-  // setTimeout(function(){
-  //
-  //   new Swiper ('.swiper-container', {
-  //     loop: true, // 循环模式选项
-  //     // 如果需要分页器
-  //     pagination: {
-  //       el: '.swiper-pagination',
-  //     },
-  //
-  //   })
   // },1000)
 
   export default {

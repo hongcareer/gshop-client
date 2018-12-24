@@ -2,7 +2,7 @@
   <div class="forth">
     <Navheader :title="'个人中心'"/>
     <div class="forth-top">
-      <div class="my-login" @click="goTo('/login')">
+      <div class="my-login" @click="goTo(user._id?'/userinfo':'/login')">
         <img src="./images/shop/2.jpg" alt="" class="headerImg">
         <div class="login">
           <p class="p1" v-if="!user.phone">{{user.name?user.name:'登录/注册'}}</p>

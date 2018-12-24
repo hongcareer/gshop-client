@@ -88,6 +88,7 @@
           };
         },1000);
         sendCode(this.phone)
+        Toast('短信已经发送到你的手机上，请注意查收')
       },
       async login(){
         let {phone,code,name,pwd,captcha} = this;

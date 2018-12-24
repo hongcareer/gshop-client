@@ -1,6 +1,6 @@
 <template>
   <ul class="shop-container" v-if="shops.length>0">
-    <li class="shop" v-for="(shop,index) in shops" :key="index">
+    <li class="shop" v-for="(shop,index) in shops" :key="index" @click="goShop">
       <div class="shop-img"><img :src="baseImgUrl+shop.image_path" alt=""/></div>
       <div class="shop-msg">
         <div class="top">
@@ -53,6 +53,11 @@
     },
     computed:{
       ...mapState(['shops'])
+    },
+    methods:{
+      goShop(){
+        this.$router.push('/shop')
+      }
     }
   }
 </script>
