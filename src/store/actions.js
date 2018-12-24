@@ -4,13 +4,16 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_POSITION,
   RECEIVE_SHOPS,
-  RECEIVE_USER
-}from './mutation-type';
+  RECEIVE_USER,
+  RECEIVE_USERINFO, RESET_USERINFO
+} from './mutation-type';
 //异步函数
 import {
   reqPosition,
   reqCategorys,
-  reqShops
+  reqShops,
+  reqLogout,
+  reqUserInfo
 } from '../Api/index'
 
 export default {
@@ -45,6 +48,12 @@ export default {
       commit(RECEIVE_USER,{user})
     }
   },
+  //登录
+  async reqLogout({commit}){
+    let result = await reqLogout();
+    if(result.code === 0){
+      commit(RESET_USERINFO)
+    }
+  }
 
-  //清空用户的信息
 }

@@ -3,8 +3,9 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_POSITION,
   RECEIVE_SHOPS,
-  RECEIVE_USER
-}from './mutation-type';
+  RECEIVE_USER,
+  RESET_USERINFO,
+} from './mutation-type';
 
 
 export default {
@@ -19,5 +20,8 @@ export default {
   },
   [RECEIVE_USER](state,{user}){
     state.user = user
-  }
+  },
+  [RESET_USERINFO](state){
+    state.user = {}
+  },
 }

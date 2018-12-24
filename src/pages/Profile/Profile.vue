@@ -111,23 +111,16 @@
         this.$router.push(path)
       },
       async logout(){
-        let result = await reqLogout()
         MessageBox.confirm('客官真的要离开了吗😓？')
           .then((action) =>{
             //退出登录
-            if(result.code === 0){
               this.$router.replace('/login')
-            }
-            //异步清空用户的信息
-            // this.$store.dispatch('clearUserInfo',user)
+              this.$store.dispatch('reqLogout')
+            // 异步清空用户的信息
           })
           .catch((action) =>{
             //退出登录
-            if(result.code === 0){
               this.$router.replace('/profile')
-            }
-            //异步清空用户的信息
-            // this.$store.dispatch('clearUserInfo',user)
           })
       }
     },
