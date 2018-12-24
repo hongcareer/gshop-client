@@ -7,11 +7,12 @@
 
 <script>
 
-import FooterGuide from './components/FooterGuide/FooterGuide'
+import FooterGuide from './components/FooterGuide/FooterGuide';
 export default {
   name: 'App',
   mounted(){
-    this.$store.dispatch('getPosition')
+    this.$store.dispatch('getPosition');
+    this.$store.dispatch('saveUserInfo');
   },
   components: {
     FooterGuide

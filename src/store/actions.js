@@ -5,7 +5,7 @@ import {
   RECEIVE_POSITION,
   RECEIVE_SHOPS,
   RECEIVE_USER,
-  RECEIVE_USERINFO, RESET_USERINFO
+  RESET_USERINFO
 } from './mutation-type';
 //异步函数
 import {
@@ -43,6 +43,14 @@ export default {
   },
   //保存用户的信息
   saveUser({commit},result){
+    if(result.code === 0){
+      let user = result.data
+      commit(RECEIVE_USER,{user})
+    }
+  },
+  //异步保存用户的信息
+  async saveUserInfo({commit}){
+    let result = await reqUserInfo()
     if(result.code === 0){
       let user = result.data
       commit(RECEIVE_USER,{user})

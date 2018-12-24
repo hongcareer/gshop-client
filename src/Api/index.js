@@ -22,6 +22,6 @@ export const reqSmsLogin = ({phone,code}) =>ajax(BASE+'/login_sms',{phone,code},
 //登出
 export const reqLogout = () =>ajax(BASE+'/logout');
 
-//登出时清空用户的信息
-export const reqUserInfo =(user)=>ajax(BASE+'/userinfo')
+//获取用户的信息，保存用户的信息，刷新时不丢失页面
+export const reqUserInfo =()=>ajax(BASE+'/userinfo')
 
