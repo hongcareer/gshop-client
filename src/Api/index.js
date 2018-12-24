@@ -19,3 +19,6 @@ export const reqUserLogin = ({name,pwd,captcha}) =>ajax(BASE+'/login_pwd',{name,
 //短信验证码登录
 export const reqSmsLogin = ({phone,code}) =>ajax(BASE+'/login_sms',{phone,code},'POST');
 
+//登出
+export const reqLogout = () =>ajax(BASE+'/logout');
+

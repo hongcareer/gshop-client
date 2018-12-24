@@ -114,9 +114,9 @@
           }
         };
         //提示错误信息
-        //同步保存用户的登录名信息和电话信息到state中
+        // 同步保存用户的登录名信息和电话信息到state中
         this.$store.dispatch('saveUser',result);
-        //跳转的个人信息页面
+        // //跳转的个人信息页面
         this.$router.replace('/profile')
       },
       getCaptcha(){

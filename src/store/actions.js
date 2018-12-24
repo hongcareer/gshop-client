@@ -44,5 +44,7 @@ export default {
       let user = result.data
       commit(RECEIVE_USER,{user})
     }
-  }
+  },
+
+  //清空用户的信息
 }

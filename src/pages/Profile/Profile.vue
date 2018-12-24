@@ -101,15 +101,34 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState} from 'vuex';
+  import { MessageBox } from 'mint-ui';
+  import {reqLogout} from '../../Api/index'
   export default {
     name: "Profile",
     methods:{
       goTo(path){
         this.$router.push(path)
       },
-      logout(){
-
+      async logout(){
+        let result = await reqLogout()
+        MessageBox.confirm('客官真的要离开了吗😓？')
+          .then((action) =>{
+            //退出登录
+            if(result.code === 0){
+              this.$router.replace('/login')
+            }
+            //异步清空用户的信息
+            // this.$store.dispatch('clearUserInfo',user)
+          })
+          .catch((action) =>{
+            //退出登录
+            if(result.code === 0){
+              this.$router.replace('/profile')
+            }
+            //异步清空用户的信息
+            // this.$store.dispatch('clearUserInfo',user)
+          })
       }
     },
     computed:{
