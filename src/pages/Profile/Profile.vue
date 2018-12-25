@@ -114,7 +114,6 @@
         MessageBox.confirm('客官真的要离开了吗😓？')
           .then((action) =>{
             //退出登录
-              this.$router.replace('/login')
               this.$store.dispatch('reqLogout')
             // 异步清空用户的信息
           })
@@ -125,7 +124,10 @@
       }
     },
     computed:{
-      ...mapState(['user'])
+      // ...mapState(['user'])
+      ...mapState({
+        user:state => state.user.user
+      })
     }
   }
 </script>

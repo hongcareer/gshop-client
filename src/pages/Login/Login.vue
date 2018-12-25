@@ -118,7 +118,10 @@
         // 同步保存用户的登录名信息和电话信息到state中
         this.$store.dispatch('saveUser',result);
         // //跳转的个人信息页面
-        this.$router.replace('/profile')
+        if(result.code === 0){
+          this.$router.replace('/profile')
+        }
+
       },
       getCaptcha(){
         this.$refs.captcha.src='http://localhost:5000/captcha?timer'+Date.now()

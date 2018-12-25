@@ -4,8 +4,11 @@
       <span class="header-search" slot="left">
         <i class="iconfont icon-sousuo"></i>
       </span>
-      <span class="header-login" slot="right">
+      <span class="header-login" slot="right" v-if="!user._id">
         登录|注册
+      </span>
+      <span class="header-login" slot="right" v-else>
+        <i class="iconfont icon-person"></i>
       </span>
     </Navheader>
 
@@ -47,7 +50,12 @@
       this.$store.dispatch('getCategorys')
     },
     computed:{
-      ...mapState(['position','categorys']),
+      // ...mapState(['position','categorys']),
+      ...mapState({
+        position:state=>state.msite.position,
+        categorys:state=>state.msite.categorys,
+        user:state =>state.user.user
+      }),
       categoryArr(){
         let bigArr = [];
         let samllArr = [];
