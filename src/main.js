@@ -7,6 +7,7 @@ import store from './store'
 import Navheader from './components/Navheader/Navheader';
 import Star from './components/Star/Star'
 import {Button} from 'mint-ui';
+import './mock/mockServer'
 
 Vue.component('Navheader',Navheader);
 Vue.component('Star',Star)

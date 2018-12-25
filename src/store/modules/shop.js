@@ -37,9 +37,10 @@ const actions={
     }
   },
   async getShopInfo({commit}){
-    let result = await reqShopInfo()
+    let result = await reqShopInfo();
     if(result.code === 0){
       let info = result.data
+
       commit(RECEIVE_SHOP_INFO,{info})
     }
   },
