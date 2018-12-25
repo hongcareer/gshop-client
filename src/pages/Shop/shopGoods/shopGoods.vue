@@ -4,7 +4,8 @@
       <div class="goods">
         <div class="menu-wrapper">
           <ul>
-            <li class="menu-item" v-for="(good,index) in goods" :key='index'>
+            <li class="menu-item" v-for="(good,index) in goods" :key='index'
+                @click="hasCurrent = true">
               <span class="text bottom-border-1px">
                  <img class="icon" :src="good.icon" v-if="good.icon"/>
                 {{good.name}}
@@ -49,11 +50,20 @@
   import BScroll from 'better-scroll';
   export default {
     name: "shopGoods",
+    data(){
+      return {
+        hasCurrent:false
+      }
+    },
     watch:{
       goods(){
         this.$nextTick(()=>{
-          new BScroll('.menu-wrapper',{})
-          new BScroll('.foods-wrapper',{})
+          new BScroll('.menu-wrapper',{
+            click:true
+          })
+          new BScroll('.foods-wrapper',{
+            click:true
+          })
         })
       }
     },

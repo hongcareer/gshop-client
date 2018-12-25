@@ -1,10 +1,10 @@
 <template>
   <div class="Msite">
     <Navheader :title="position.name">
-      <span class="header-search" slot="left">
+      <span class="header-search" slot="left" @click="$router.push('/search')">
         <i class="iconfont icon-sousuo"></i>
       </span>
-      <span class="header-login" slot="right" v-if="!user._id">
+      <span class="header-login" slot="right" v-if="!user._id" @click="$router.replace('/login')">
         登录|注册
       </span>
       <span class="header-login" slot="right" v-else>
