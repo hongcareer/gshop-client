@@ -25,3 +25,10 @@ export const reqLogout = () =>ajax(BASE+'/logout');
 //获取用户的信息，保存用户的信息，刷新时不丢失页面
 export const reqUserInfo =()=>ajax(BASE+'/userinfo')
 
+//商家信息
+//获取食品列表
+export const reqShopGoods =()=>ajax('/goods')
+//获取商家评分
+export const reqShopRatings =()=>ajax('/ratings')
+//获取商家信息
+export const reqShopInfo =()=>ajax('/info')

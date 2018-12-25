@@ -111,7 +111,7 @@
         this.$router.push(path)
       },
       async logout(){
-        MessageBox.confirm('客官真的要离开了吗😓？')
+        MessageBox.confirm('客官您真的要离开了吗😓？')
           .then((action) =>{
             //退出登录
               this.$store.dispatch('reqLogout')
