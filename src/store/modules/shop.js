@@ -1,5 +1,16 @@
-import {reqShopGoods,reqShopRatings,reqShopInfo} from "../../Api";
-import {RECEIVE_SHOP_GOODS, RECEIVE_SHOP_INFO,RECEIVE_SHOP_RATINGS} from "../mutation-type";
+import Vue from 'vue'
+import {
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
+} from "../../Api";
+import {
+  RECEIVE_SHOP_GOODS,
+  RECEIVE_SHOP_INFO,
+  RECEIVE_SHOP_RATINGS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
+} from "../mutation-type";
 
 const state={
   goods:[],
@@ -17,7 +28,21 @@ const mutations={
   [RECEIVE_SHOP_INFO](state,{info}){
     state.info = info
   },
+  //增加食物的数量
+  [ADD_FOOD_COUNT](state,{food}){
+    if(!food.count){
+      Vue.set(food,'count',1)
+    }else{
+      food.count++
+    }
 
+  },
+  //减少食物的数量
+  [REDUCE_FOOD_COUNT](state,{food}){
+    if(food.count>0){
+      food.count--
+    }
+  }
 };
 const actions={
   //提交参数到mutations中，mutations更显状态数据
@@ -40,10 +65,16 @@ const actions={
     let result = await reqShopInfo();
     if(result.code === 0){
       let info = result.data
-
       commit(RECEIVE_SHOP_INFO,{info})
     }
   },
+  getFoodCount({commit},{food,isAdd}){
+    if(isAdd){
+      commit(ADD_FOOD_COUNT,{food})
+    }else{
+      commit(REDUCE_FOOD_COUNT,{food})
+    }
+  }
 
 };
 const getter={

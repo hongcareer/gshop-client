@@ -32,11 +32,11 @@
       width 66px
       height 35px
       border-radius 1px
-      background-color: #02A774
+      background-color: dodgerblue
       font-size 16px
       line-height 23px
       text-align: center
-      border: 4px solid #02a774
+      border: 4px solid dodgerblue
       color white
       outline none
 </style>

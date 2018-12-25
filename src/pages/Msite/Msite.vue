@@ -123,7 +123,7 @@
               font-size 14px
               margin: 5px 0
       .swiper-pagination-bullet-active
-        background-color: #02a774
+        background-color: dodgerblue
     .main
       top-border-1px(#ccc)
       background-color white
@@ -220,8 +220,8 @@
               float right
             .bird
               color: #fff
-              background-color: #02a774
-              border: 1px solid #02a774
+              background-color: dodgerblue
+              border: 1px solid dodgerblue
               font-size: 12px;
               border-radius: 2px;
               float left
@@ -230,8 +230,8 @@
               float: right
               font-size: 12px
               border-radius: 2px
-              color: #02a774;
-              border: 1px solid #02a774;
+              color: dodgerblue;
+              border: 1px solid dodgerblue;
               margin-top 13px
 
 

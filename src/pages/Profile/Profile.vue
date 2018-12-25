@@ -147,7 +147,7 @@
         padding 22px 10px
         width 100%
         height 112px
-        background-color: #02a774
+        background-color: dodgerblue
         .headerImg
           float: left;
           height 70px
@@ -270,7 +270,7 @@
             float left
             i
               font-size 30px
-              color #02a774
+              color dodgerblue
               line-height: 48px;
           .second
             padding-top: 17px;
@@ -356,7 +356,7 @@
         float left
         i
           font-size 30px
-          color #02a774
+          color dodgerblue
           line-height: 48px;
       .second
         padding-top: 17px;

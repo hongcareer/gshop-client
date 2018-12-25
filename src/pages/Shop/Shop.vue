@@ -20,6 +20,9 @@
   import Shopheader from '../../components/Shopheader/Shopheader'
   export default {
     name: "Shop",
+    mounted(){
+      this.$store.dispatch('getShopGoods')
+    },
     components:{
       Shopheader
     }
@@ -43,7 +46,7 @@
         display block
         position relative
         &.router-link-active
-          color #02a774
+          color dodgerblue
           &::after
             content ''
             position absolute
@@ -52,5 +55,5 @@
             width 35px
             height 2px
             transform translateX(-50%)
-            background #02a774
+            background dodgerblue
 </style>

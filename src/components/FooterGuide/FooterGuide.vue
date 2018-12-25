@@ -57,5 +57,5 @@
         font-size: 16px
         margin 3px 0
       &.active
-        color #02a774
+        color dodgerblue
 </style>

@@ -24,7 +24,7 @@
     z-index 700
     height:45px
     width 100%
-    background-color #02a774
+    background-color dodgerblue
     line-height 45px
     text-align: center
     color white

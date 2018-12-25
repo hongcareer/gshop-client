@@ -132,8 +132,8 @@
             margin-left 2px
         .bird
           color: #fff
-          background-color: #02a774
-          border: 1px solid #02a774
+          background-color: dodgerblue
+          border: 1px solid dodgerblue
           font-size: 12px;
           border-radius: 2px;
           float left
@@ -142,8 +142,8 @@
           float: right
           font-size: 12px
           border-radius: 2px
-          color: #02a774;
-          border: 1px solid #02a774;
+          color: dodgerblue;
+          border: 1px solid dodgerblue;
           margin-top 13px
 
 

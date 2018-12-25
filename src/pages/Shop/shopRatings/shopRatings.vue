@@ -45,7 +45,7 @@
         color: rgb(77, 85, 93)
         background: rgba(77, 85, 93, 0.2)
         &.active
-          background: #02a774
+          background: dodgerblue
           color: #fff
         .count
           margin-left: 2px
