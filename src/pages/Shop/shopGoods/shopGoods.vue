@@ -18,7 +18,9 @@
             <li class="food-list-hook" v-for="(good,index) in goods" :key="index">
               <h1 class="title">{{good.name}}</h1>
               <ul>
-                <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" :key="index">
+                <li class="food-item bottom-border-1px"
+                    v-for="(food,index) in good.foods"
+                    :key="index" @click.stop="toggleShow(food)">
                   <div class="icon">
                     <img width="57" height="57" :src="food.icon">
                   </div>
@@ -41,6 +43,7 @@
           </ul>
         </div>
       </div>
+      <Food ref=food :food="food"/>
     </div>
   </div>
 </template>
@@ -48,13 +51,14 @@
 <script>
   import {mapState} from 'vuex';
   import BScroll from 'better-scroll';
+  import Food from'../../../components/Food/Food'
   export default {
     name: "shopGoods",
     data(){
       return {
-        hasCurrent:false,
         tops:[],
-        scrollY:0
+        scrollY:0,
+        food:{}
       }
     },
     watch:{
@@ -80,7 +84,7 @@
         //currentIndex的显示时机是页面初始化渲染及发生变化的时候，
         //在页面初始化渲染的时候，this.leftScroll还没有被实例，数据更新完成之后才有
         if(index != this.index && this.leftScroll){
-          //上次的index和当前index不想等的时候
+          //上次的index和当前index不相等的时候，滚动到当前的元素
           this.index = index
           let el = this.$refs.leftFood.children[index];
           this.leftScroll.scrollToElement(el,500)
@@ -128,7 +132,15 @@
         this.scrollY = y;
         //数据更新之后,获取scrollY的值,监视右侧滚动的距离
         this.rightScroll.scrollTo(0,-y,1000)
+      },
+      //点击食物是否显示食物详情
+      toggleShow(food){
+        this.food = food;
+        this.$refs.food.toggleFoodShow(food)
       }
+    },
+    components:{
+      Food
     }
   }
 </script>
