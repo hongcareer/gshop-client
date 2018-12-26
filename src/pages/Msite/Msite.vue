@@ -7,7 +7,7 @@
       <span class="header-login" slot="right" v-if="!user._id" @click="$router.replace('/login')">
         登录|注册
       </span>
-      <span class="header-login" slot="right" v-else>
+      <span class="header-login" slot="right" v-else @click="$router.replace('/userinfo')">
         <i class="iconfont icon-person"></i>
       </span>
     </Navheader>

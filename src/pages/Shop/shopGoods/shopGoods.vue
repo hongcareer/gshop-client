@@ -3,9 +3,9 @@
     <div>
       <div class="goods">
         <div class="menu-wrapper">
-          <ul>
+          <ul ref="leftFood">
             <li class="menu-item" v-for="(good,index) in goods" :key='index'
-                @click="hasCurrent = true">
+                :class="{current:currentIndex === index}" @click="clickFoods(index)">
               <span class="text bottom-border-1px">
                  <img class="icon" :src="good.icon" v-if="good.icon"/>
                 {{good.name}}
@@ -14,7 +14,7 @@
           </ul>
         </div>
         <div class="foods-wrapper">
-          <ul>
+          <ul ref="rightFood">
             <li class="food-list-hook" v-for="(good,index) in goods" :key="index">
               <h1 class="title">{{good.name}}</h1>
               <ul>
@@ -52,26 +52,84 @@
     name: "shopGoods",
     data(){
       return {
-        hasCurrent:false
+        hasCurrent:false,
+        tops:[],
+        scrollY:0
       }
     },
     watch:{
       goods(){
         this.$nextTick(()=>{
-          new BScroll('.menu-wrapper',{
-            click:true
-          })
-          new BScroll('.foods-wrapper',{
-            click:true
-          })
+          //页面更新完成之后，获取scroll的值
+          this._initScroll()
+          //页面更新完成之后，获取top值
+          this._initTop()
         })
       }
     },
     computed:{
       ...mapState({
         goods:state => state.shop.goods
-      })
+      }),
+      currentIndex(){
+        const {tops,scrollY} = this;
+        const index = tops.findIndex((top,index)=>{
+          return scrollY>=top && scrollY<tops[index+1]
+        });
+        //scrollToElement(el, time, offsetX, offsetY, easing)，滚动到指定的元素
+        //currentIndex的显示时机是页面初始化渲染及发生变化的时候，
+        //在页面初始化渲染的时候，this.leftScroll还没有被实例，数据更新完成之后才有
+        if(index != this.index && this.leftScroll){
+          //上次的index和当前index不想等的时候
+          this.index = index
+          let el = this.$refs.leftFood.children[index];
+          this.leftScroll.scrollToElement(el,500)
+        }
+        return index;
+      }
     },
+    methods:{
+      //获取scroll的值，实现滚动
+      _initScroll(){
+        let leftScroll = new BScroll('.menu-wrapper',{
+          click:true
+        });
+        let rightScroll = new BScroll('.foods-wrapper',{
+          click:true,
+          probeType:1
+        });
+        this.rightScroll = rightScroll;
+        this.leftScroll = leftScroll;
+
+        //数据更新之后,获取scrollY的值,监视右侧滚动的距离
+        this.rightScroll.on('scroll',({x,y})=>{
+          this.scrollY = Math.abs(y)
+        })
+        //监视滚动结束的值
+        rightScroll.on('scrollEnd',({x,y})=>{
+          this.scrollY = Math.abs(y)
+        })
+
+      },
+      _initTop(){
+        //获取每一个li的高度到数组中
+        const lis = this.$refs.rightFood.children
+        let ItemHeight = 0;
+        this.tops.push(ItemHeight)
+        Array.prototype.slice.call(lis).forEach((li,index)=>{
+          ItemHeight += li.offsetHeight;
+          this.tops.push(ItemHeight)
+        });
+
+      },
+      clickFoods(index){
+        //点击左侧的分类栏，右侧的食品联动
+        let y = this.tops[index];
+        this.scrollY = y;
+        //数据更新之后,获取scrollY的值,监视右侧滚动的距离
+        this.rightScroll.scrollTo(0,-y,1000)
+      }
+    }
   }
 </script>
 
@@ -100,7 +158,7 @@
           z-index: 10
           margin-top: -1px
           background: #fff
-          color: $green
+          color: dodgerblue
           font-weight: 700
           .text
             border-none()
