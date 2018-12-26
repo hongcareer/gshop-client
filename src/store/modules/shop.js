@@ -16,7 +16,7 @@ const state={
   goods:[],
   ratings:[],
   info:{},
-
+  cartFoods:[]
 };
 const mutations={
   [RECEIVE_SHOP_GOODS](state,{goods}){
@@ -32,8 +32,9 @@ const mutations={
   [ADD_FOOD_COUNT](state,{food}){
     if(!food.count){
       Vue.set(food,'count',1)
+      state.cartFoods.push(food)
     }else{
-      food.count++
+      food.count++;
     }
 
   },
@@ -41,7 +42,12 @@ const mutations={
   [REDUCE_FOOD_COUNT](state,{food}){
     if(food.count>0){
       food.count--
+      //从cartFoods中删除数量为0的食物
+      if(food.count === 0){
+        state.cartFoods.splice(state.cartFoods.indexOf(food),1)
+      }
     }
+
   }
 };
 const actions={
@@ -78,7 +84,15 @@ const actions={
 
 };
 const getter={
-
+  cartFoods(){
+    let foods = [];
+    state.goods.forEach(good=>{
+      good.forEach(food=>{
+        foods.push(food)
+      })
+    });
+    return foods
+  }
 }
 export default {
   state,
