@@ -63,15 +63,15 @@
         food:{}
       }
     },
-    watch:{
-      goods(){
+    mounted(){
+      this.$store.dispatch('getShopGoods',()=>{
         this.$nextTick(()=>{
           //页面更新完成之后，获取scroll的值
           this._initScroll()
           //页面更新完成之后，获取top值
           this._initTop()
         })
-      }
+      })
     },
     computed:{
       ...mapState({

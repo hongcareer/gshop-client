@@ -6,7 +6,7 @@
         <div class="top">
           <p class="intruction">{{shop.name}}</p>
           <div class="stars">
-            <Star :rating="shop.rating"/>
+            <Star :rating="shop.rating" :size="24"/>
             <span class="score">{{shop.rating}}</span>
             <span class="sell">月售{{shop.recent_order_num}}单</span>
           </div>

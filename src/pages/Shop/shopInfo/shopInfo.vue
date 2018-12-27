@@ -29,7 +29,7 @@
       <section class="section">
         <h3 class="section-title">商家实景</h3>
         <div class="pic-wrapper">
-          <ul class="pic-list">
+          <ul class="pic-list" ref="picsUl">
             <li class="pic-item" v-for="(pic,index) in info.pics" :key="index">
               <img width="120" height="90" :src="pic">
             </li>
@@ -40,7 +40,7 @@
 
       <section class="section">
         <h3 class="section-title">商家信息</h3>
-        <ul class="detail">
+        <ul class="detail"">
           <li>
             <span class="bold">品类</span>
             <span>{{info.category}}</span>
@@ -73,19 +73,42 @@
         activity:['activity-green','activity-red','activity-orange']
       }
     },
+    mounted(){
+      if(!this.info.name){
+        return
+      };
+      this._initScroll()
+    },
     computed:{
       ...mapState({
         info:state =>state.shop.info
-      })
+      }),
+    },
+    methods:{
+      _initScroll(){
+        new BScroll('.shop-info',{
+          click:true
+        });
+
+        const ul = this.$refs.picsUl
+        const liWidth = 120
+        const space = 6
+        const size = this.info.pics.length
+        const width = (liWidth + space) * size - space;
+        console.log(width);
+        ul.style.width = width + 'px'
+        new BScroll('.pic-wrapper',{
+          click:true,
+          scrollX:true
+        })
+      }
     },
     watch:{
+      //info页面本身不会请求info的数据，所以在初始化mounted的时候，并没有this.info.name值，
+      //所以监视info的值，一旦状态中的info的值发生了变化，就创建scroll的实例对象
       info(){
         this.$nextTick(()=>{
-          new BScroll('.shop-info',{
-          })
-          new BScroll('.pic-wrapper',{
-            // scrollX:true
-          })
+          this._initScroll()
         })
 
       }

@@ -20,9 +20,6 @@
   import Shopheader from '../../components/Shopheader/Shopheader'
   export default {
     name: "Shop",
-    mounted(){
-      this.$store.dispatch('getShopGoods')
-    },
     components:{
       Shopheader
     }

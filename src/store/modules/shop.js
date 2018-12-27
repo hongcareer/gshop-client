@@ -53,18 +53,21 @@ const mutations={
 const actions={
   //提交参数到mutations中，mutations更显状态数据
 
-  async getShopGoods({commit}){
+  async getShopGoods({commit},cb){
     let result = await reqShopGoods()
     if(result.code === 0){
       let goods = result.data
-      commit(RECEIVE_SHOP_GOODS,{goods})
+      commit(RECEIVE_SHOP_GOODS,{goods});
+      typeof cb === 'function' && cb()
     }
   },
-  async getShopRatings({commit}){
+  async getShopRatings({commit},cb){
     let result = await reqShopRatings()
     if(result.code === 0){
-      let ratings = result.data
+      let ratings = result.data;
       commit(RECEIVE_SHOP_RATINGS,{ratings})
+      //在状态更新页面显示完毕后，调用new SCroll对象
+      typeof cb === 'function' && cb()
     }
   },
   async getShopInfo({commit}){
@@ -84,16 +87,16 @@ const actions={
 
 };
 const getter={
-  cartFoods(){
-    let foods = [];
-    state.goods.forEach(good=>{
-      good.forEach(food=>{
-        foods.push(food)
-      })
-    });
-    return foods
+  // cartFoods(){
+  //   let foods = [];
+  //   state.goods.forEach(good=>{
+  //     good.forEach(food=>{
+  //       foods.push(food)
+  //     })
+  //   });
+  //   return foods
   }
-}
+
 export default {
   state,
   mutations,
