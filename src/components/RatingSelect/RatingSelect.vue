@@ -1,25 +1,48 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type">
-      <span class="block">
-        全部<span class="count">1</span>
+      <span class="block" @click="changeSelectType(2)" :class="{active:selectType === 2}">
+        全部<span class="count">{{ratings.length}}</span>
       </span>
-      <span class="block active">
-        推荐<span class="count">1</span>
+      <span class="block" @click="changeSelectType(0)" :class="{active:selectType === 0}">
+        推荐<span class="count">{{satisfied.length}}</span>
       </span>
-      <span class="block">
-        吐槽<span class="count">0</span>
+      <span class="block" @click="changeSelectType(1)" :class="{active:selectType === 1}">
+        吐槽<span class="count">{{nagtive.length}}</span>
       </span>
     </div>
-    <div class="switch on">
-      <span class="iconfont icon-check_circle"></span>
+    <div class="switch" :class="{on:onlyText}">
+      <span class="iconfont icon-check_circle" @click="toggleShowText"></span>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
 </template>
 
 <script>
-  export default {}
+  import {mapState} from 'vuex'
+  export default {
+    props:{
+      selectType:Number,
+      onlyText:Boolean,
+      toggleShowText:Function,
+      changeSelectType:Function
+    },
+    computed:{
+      ...mapState({
+        ratings:state => state.shop.ratings
+      }),
+      satisfied(){
+        return this.ratings.filter((rating,index)=>{
+          return rating.rateType === 0
+        })
+      },
+      nagtive(){
+        return this.ratings.filter((rating,index)=>{
+          return rating.rateType === 1
+        })
+      },
+    }
+  }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -53,7 +76,7 @@
       font-size: 0
       &.on
         .icon-check_circle
-          color: $green
+          color: dodgerblue
       .icon-check_circle
         display: inline-block
         vertical-align: top

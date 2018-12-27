@@ -26,11 +26,12 @@
 
       <Split />
 
-      <RatingSelect />
+      <RatingSelect :changeSelectType="changeSelectType" :toggleShowText="toggleShowText"
+                    :onlyText="onlyText" :selectType="selectType"/>
 
       <div class="rating-wrapper">
         <ul>
-          <li class="rating-item" v-for="(rating,index) in ratings" :key="index">
+          <li class="rating-item" v-for="(rating,index) in FilterRatings" :key="index">
             <div class="avatar">
               <img width="28" height="28" :src="rating.avatar">
             </div>
@@ -42,7 +43,9 @@
               </div>
               <p class="text">{{rating.text}}</p>
               <div class="recommend">
-                <span class="iconfont icon-thumb_up"></span>
+                <span class="iconfont " :class="rating.rateType === 1?'icon-thumb_down':'icon-thumb_up'"></span>
+                <span class="item" v-if="rating.recommend"
+                      v-for="(item,index) in rating.recommend" :key="index">{{item}}</span>
               </div>
               <div class="time">{{rating.rateTime}}</div>
             </div>
@@ -58,6 +61,12 @@
   import RatingSelect from '../../../components/RatingSelect/RatingSelect'
   import BScroll from 'better-scroll';
   export default {
+    data(){
+      return {
+        onlyText:true,
+        selectType:2 //0好评 1差评 2所有评论
+      }
+    },
     mounted(){
       this.$store.dispatch('getShopRatings',()=>{
         this.$nextTick(()=>{
@@ -67,11 +76,25 @@
         })
       })
     },
+    methods:{
+      changeSelectType(selectType){
+        this.selectType = selectType
+      },
+      toggleShowText(){
+        this.onlyText = !this.onlyText
+      },
+    },
     computed:{
       ...mapState({
         info:state => state.shop.info,
         ratings:state => state.shop.ratings
-      })
+      }),
+      FilterRatings(){
+        const {onlyText,selectType} = this;
+        return this.ratings.filter((rating,index)=>{
+          return (selectType === 2|| selectType === rating.rateType) && (!onlyText || rating.text.length>0)
+        })
+      },
     },
     components:{
       RatingSelect
